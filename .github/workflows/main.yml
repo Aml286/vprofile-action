@@ -48,5 +48,6 @@ jobs:
           projectKey: vprofile-action42_vproapp
         timeout-minutes: 5
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
 
