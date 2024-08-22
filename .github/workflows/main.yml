@@ -55,9 +55,6 @@ jobs:
       - name: Code checkout
         uses: actions/checkout@v4
 
-      - name: Build & upload image to ecr
-        uses: appleboy/docker-ecr-action@master
-        with:
       - name: upload image to ECR
         uses: appleboy/docker-ecr-action@master
         with:
