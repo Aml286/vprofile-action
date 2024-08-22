@@ -43,7 +43,7 @@ jobs:
       - name: SonarQube Quality Gate Check
         uses: sonarsource/sonarqube-quality-gate-action@master
         with:
-          projectKey: ${{ secrets.SONAR_PROJECT_KEY }}
+          projectKey: vprofile-action42_vproapp
         timeout-minutes: 5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
