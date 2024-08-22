@@ -1,5 +1,7 @@
 name: vprofile actions
+
 on: workflow_dispatch
+
 env:
   AWS_REGION: us-east-1
   ECR_REPOSITORY: vprofileapp
@@ -33,7 +35,7 @@ jobs:
            -Dsonar.host.url=${{ secrets.SONAR_URL }} \
            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
-           -Dsonar.projectKey= vprofile-action42_vproapp \
+           -Dsonar.projectKey=vprofile-action42_vproapp \
            -Dsonar.sources=src/ \
            -Dsonar.junit.reportsPath=target/surefire-reports \
            -Dsonar.jacoco.reportPath=target/jacoco.exec \
@@ -46,6 +48,5 @@ jobs:
           projectKey: vprofile-action42_vproapp
         timeout-minutes: 5
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR
 
