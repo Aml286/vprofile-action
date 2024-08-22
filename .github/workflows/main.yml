@@ -24,10 +24,15 @@ jobs:
       - name: Checkstyle
         run: mvn checkstyle:checkstyle
 
-      - name: Setup SonarQube
-        uses: warchant/setup-sonar-scanner@v7
+      - name: Setup SonarCloud
+        uses: sonarsource/sonarcloud-github-action@v2
+        with:
+          organization: ${{ secrets.SONAR_ORGANIZATION }}
+          projectKey: ${{ secrets.SONAR_PROJECT_KEY }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      - name: SonarQube Scan
+      - name: SonarCloud Scan
         run: |
           sonar-scanner \
            -Dsonar.host.url=${{ secrets.SONAR_URL }} \
@@ -40,8 +45,8 @@ jobs:
            -Dsonar.java.checkstyle.reportPath=target/checkstyle-result.xml \
            -Dsonar.java.binaries=target/test-classes/com/visualpathit/account
 
-      - name: SonarQube Quality Gate Check
-        uses: sonarsource/sonarqube-quality-gate-action@master
+      - name: SonarCloud Quality Gate Check
+        uses: sonarsource/sonarcloud-quality-gate-action@v2
         with:
           projectKey: ${{ secrets.SONAR_PROJECT_KEY }}
         timeout-minutes: 5
