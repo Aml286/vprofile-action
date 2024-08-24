@@ -68,7 +68,7 @@ jobs:
           dockerfile: ./Dockerfile
           context: ./
 
-  DeployToEks:
+  Deploy To Eks:
     needs: Build_and_Publish
     runs-on: ubuntu-latest
     steps:
@@ -90,10 +90,7 @@ jobs:
 
 
       - name: Login to AWS ECR
-        run: kubectl create secret docker-registry regcred --docker-server=${{ secrets.REGISTRY }} --docker-username=AWS --docker-password=$(aws ecr get-login-password --region ${{ env.AWS_REGION }})
-
-      - name: Login to AWS ECR 
-        runs: kubectl create secret docker-registry regcred --docker-server=${{ secrets. REGISTRY }} --docker-username=AWS --docker-password=$(aws ecr get-login-password)
+        run: kubectl create secret docker-registry regcred --docker-server=${{ secrets.REGISTRY }} --docker-username=AWS --docker-password=$(aws ecr get-login-password)
 
       - name: Deploy Helm
         uses: bitovi/github-actions-deploy-eks-helm@v1.2.8
