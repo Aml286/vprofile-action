@@ -68,7 +68,7 @@ jobs:
           dockerfile: ./Dockerfile
           context: ./
 
-  Deploy To Eks:
+  Deploy-To-Eks:
     needs: Build_and_Publish
     runs-on: ubuntu-latest
     steps:
