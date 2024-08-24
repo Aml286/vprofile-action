@@ -9,7 +9,7 @@ env:
 jobs:
   Testing:
     runs-on: ubuntu-latest
-    steps: 
+    steps:
       - name: Code Checkout
         uses: actions/checkout@v4
 
@@ -20,13 +20,13 @@ jobs:
         run: mvn checkstyle:checkstyle          
 
       - name: Setup Java 11
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '11'
 
       - name: Setup SonarQube
-        uses: warchant/setup-sonar-scanner@v7
+        uses: warchant/setup-sonar-scanner@v8 # Check for latest compatible version
 
       - name: SonarQube Scan
         run: sonar-scanner 
@@ -42,7 +42,7 @@ jobs:
 
       - name: SonarQube Quality Gate Check
         id: sonaqube-quality-gate-check
-        uses: sonarsource/sonarqube-quality-gate-action@master
+        uses: sonarsource/sonarqube-quality-gate-action@v2 # Check for latest compatible version
         timeout-minutes: 5
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -55,12 +55,12 @@ jobs:
       - name: Code checkout
         uses: actions/checkout@v4
 
-      - name: upload image to ECR
-        uses: appleboy/docker-ecr-action@master
+      - name: Upload image to ECR
+        uses: appleboy/docker-ecr-action@v1.2.0 # Check for latest compatible version
         with:
           access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
           secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          registry: ${{ secrets.REGISTRY}}
+          registry: ${{ secrets.REGISTRY }}
           repo: ${{ env.ECR_REPOSITORY }}
           region: ${{ env.AWS_REGION }}
           tags: latest,${{ github.run_number }}
@@ -75,8 +75,8 @@ jobs:
       - name: Code checkout
         uses: actions/checkout@v4
 
-      - name: Configure AWS Credetials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2 # Check for latest compatible version
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -89,10 +89,10 @@ jobs:
         run: cat ~/.kube/config
 
       - name: Login to AWS ECR
-        run: kubectl create secret docker-registry regcred1 --docker-server=${{ secrets.REGISTERY }} --docker-username=AWS --docker-password=$(aws ecr get-login-password)
+        run: kubectl create secret docker-registry regcred1 --docker-server=${{ secrets.REGISTRY }} --docker-username=AWS --docker-password=$(aws ecr get-login-password)
 
       - name: Deploy Helm
-        uses: bitovi/github-actions-deploy-eks-helm@v1.2.8
+        uses: bitovi/github-actions-deploy-eks-helm@v1.3.0 # Check for latest compatible version
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -101,4 +101,5 @@ jobs:
           chart-path: helm/vprofilecharts
           namespace: default
           values: appimg=${{ secrets.REGISTRY }}/${{ env.ECR_REPOSITORY }},apptag=${{ github.run_number }}
-          name: vprofile-stack      
+          name: vprofile-stack
+
