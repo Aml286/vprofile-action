@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: 963046431923.dkr.ecr.us-east-1.amazonaws.com/vprofileapp:81
+  repository: nginx
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
